@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { post } from "../api"; // Import the reusable post function
+import { post } from "../api";
 import "../styles/_auth.scss";
 
 const SignUp = () => {

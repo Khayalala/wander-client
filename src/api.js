@@ -1,6 +1,4 @@
 const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:1337";
-
-// A reusable function for GET requests
 export const get = async (endpoint) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`);
@@ -14,7 +12,6 @@ export const get = async (endpoint) => {
   }
 };
 
-// A reusable function for POST requests
 export const post = async (endpoint, data) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
@@ -34,7 +31,6 @@ export const post = async (endpoint, data) => {
   }
 };
 
-// A reusable function for DELETE requests
 export const del = async (endpoint) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {

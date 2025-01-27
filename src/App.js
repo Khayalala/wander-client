@@ -15,7 +15,6 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import { post, del } from "./api"; // Import API functions
 import "./styles/main.scss";
 
 function App() {
@@ -38,39 +37,21 @@ function App() {
     localStorage.setItem("itineraries", JSON.stringify(itineraries));
   }, [itineraries]);
 
-  // Handle form submission to add or update an itinerary
-  const handleFormSubmit = async (formData) => {
+  const handleFormSubmit = (formData) => {
     if (editingIndex !== null) {
-      // Update existing itinerary locally
       const updatedItineraries = itineraries.map((itinerary, index) =>
         index === editingIndex ? formData : itinerary
       );
       setItineraries(updatedItineraries);
       setEditingIndex(null);
     } else {
-      try {
-        // Save new itinerary to the backend
-        const response = await post("/api/itineraries", formData);
-        // Update local state with the response from the backend
-        setItineraries([...itineraries, response]);
-      } catch (error) {
-        console.error("Error adding itinerary:", error);
-      }
+      setItineraries([...itineraries, formData]);
     }
   };
 
-  // Handle deleting an itinerary
-  const handleDelete = async (index) => {
-    const itineraryToDelete = itineraries[index];
-    try {
-      // Remove the itinerary from the backend
-      await del(`/api/itineraries/${itineraryToDelete.id}`);
-      // Update local state
-      const updatedItineraries = itineraries.filter((_, i) => i !== index);
-      setItineraries(updatedItineraries);
-    } catch (error) {
-      console.error("Error deleting itinerary:", error);
-    }
+  const handleDelete = (index) => {
+    const updatedItineraries = itineraries.filter((_, i) => i !== index);
+    setItineraries(updatedItineraries);
   };
 
   const handleEdit = (index) => {
