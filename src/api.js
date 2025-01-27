@@ -1,7 +1,14 @@
 const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:1337";
+
+console.log("BASE_URL:", BASE_URL); // Log the backend URL to debug issues
+
 export const get = async (endpoint) => {
   try {
-    const response = await fetch(`${BASE_URL}${endpoint}`);
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }
@@ -35,6 +42,9 @@ export const del = async (endpoint) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     if (!response.ok) {
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
