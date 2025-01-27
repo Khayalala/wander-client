@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { post } from "../api";
 import "../styles/_auth.scss";
 
@@ -65,9 +66,9 @@ const SignUp = () => {
       </form>
       <p>
         Already have an account?{" "}
-        <a href="/signin" className="link">
+        <Link to="/signin" className="link">
           Sign In Here
-        </a>
+        </Link>
       </p>
     </div>
   );

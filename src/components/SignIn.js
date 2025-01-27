@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { post } from "../api"; 
+import { Link } from "react-router-dom"; 
+import { post } from "../api";
 import "../styles/_auth.scss";
 
 const SignIn = ({ setAuthenticated, setUsername }) => {
@@ -54,9 +55,9 @@ const SignIn = ({ setAuthenticated, setUsername }) => {
       </form>
       <p>
         Don't have an account?{" "}
-        <a href="/signup" className="link">
+        <Link to="/signup" className="link">
           Sign Up Here
-        </a>
+        </Link>
       </p>
     </div>
   );
