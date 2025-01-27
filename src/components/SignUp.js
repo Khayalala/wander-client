@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { post } from "../api"; // Import the reusable post function
 import "../styles/_auth.scss";
 
 const SignUp = () => {
@@ -18,15 +18,12 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:1337/api/auth/local/register", {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      });
+      await post("/api/auth/local/register", formData);
       setSuccess("Account created successfully! You can now sign in.");
       setFormData({ username: "", email: "", password: "" });
       setError("");
     } catch (err) {
+      console.error("Error signing up:", err);
       setError("Failed to create an account. Please try again.");
     }
   };

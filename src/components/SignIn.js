@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { post } from "../api"; // Import the reusable post function
 import "../styles/_auth.scss";
 
 const SignIn = ({ setAuthenticated, setUsername }) => {
@@ -13,18 +13,16 @@ const SignIn = ({ setAuthenticated, setUsername }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:1337/api/auth/local",
-        {
-          identifier: formData.email,
-          password: formData.password,
-        }
-      );
-      localStorage.setItem("token", response.data.jwt);
-      localStorage.setItem("username", response.data.user.username);
+      const response = await post("/api/auth/local", {
+        identifier: formData.email,
+        password: formData.password,
+      });
+      localStorage.setItem("token", response.jwt);
+      localStorage.setItem("username", response.user.username);
       setAuthenticated(true);
-      setUsername(response.data.user.username);
+      setUsername(response.user.username);
     } catch (err) {
+      console.error("Error signing in:", err);
       setError("Invalid email or password. Please try again.");
     }
   };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { post } from "../api"; // Import the post function from api.js
 import "../styles/_itineraryForm.scss";
 
 const ItineraryForm = ({ onAddItinerary, editingItem }) => {
@@ -51,17 +52,28 @@ const ItineraryForm = ({ onAddItinerary, editingItem }) => {
     setErrors({ ...errors, [name]: "" });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onAddItinerary(formData);
-      setFormData({
-        destination: "",
-        startDate: "",
-        endDate: "",
-        activities: "",
-      });
-      setErrors({});
+      try {
+        const endpoint = editingItem ? `/api/itineraries/${editingItem.id}` : "/api/itineraries";
+        const method = editingItem ? "PUT" : "POST";
+
+        const response = await post(endpoint, formData, method);
+        console.log(`${editingItem ? "Updated" : "Added"} itinerary:`, response);
+
+        // Clear the form and notify parent component
+        onAddItinerary(response.data);
+        setFormData({
+          destination: "",
+          startDate: "",
+          endDate: "",
+          activities: "",
+        });
+        setErrors({});
+      } catch (error) {
+        console.error("Error submitting itinerary:", error);
+      }
     }
   };
 
