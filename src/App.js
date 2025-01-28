@@ -77,56 +77,59 @@ function App() {
           username={username}
           onLogout={handleLogout}
         />
-        <Routes>
-          {authenticated ? (
-            <>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <MainContent />
-                    <ItineraryForm
-                      onAddItinerary={handleFormSubmit}
-                      editingItem={
-                        editingIndex !== null ? itineraries[editingIndex] : null
-                      }
+        <div className="main-content">
+          <Routes>
+            {authenticated ? (
+              <>
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <MainContent />
+                      <ItineraryForm
+                        onAddItinerary={handleFormSubmit}
+                        editingItem={
+                          editingIndex !== null
+                            ? itineraries[editingIndex]
+                            : null
+                        }
+                      />
+                      <ItineraryList
+                        itineraries={itineraries}
+                        onDelete={handleDelete}
+                        onEdit={handleEdit}
+                        onItineraryClick={handleItineraryClick}
+                      />
+                      <Modal
+                        selectedItinerary={selectedItinerary}
+                        onClose={() => setSelectedItinerary(null)}
+                      />
+                    </>
+                  }
+                />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </>
+            ) : (
+              <>
+                <Route
+                  path="/signin"
+                  element={
+                    <SignIn
+                      setAuthenticated={setAuthenticated}
+                      setUsername={setUsername}
                     />
-                    <ItineraryList
-                      itineraries={itineraries}
-                      onDelete={handleDelete}
-                      onEdit={handleEdit}
-                      onItineraryClick={handleItineraryClick}
-                    />
-                    <Modal
-                      selectedItinerary={selectedItinerary}
-                      onClose={() => setSelectedItinerary(null)}
-                    />
-                  </>
-                }
-              />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          ) : (
-            <>
-              <Route
-                path="/signin"
-                element={
-                  <SignIn
-                    setAuthenticated={setAuthenticated}
-                    setUsername={setUsername}
-                  />
-                }
-              />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              {/* Redirect any undefined route to /signin */}
-              <Route path="*" element={<Navigate to="/signin" />} />
-            </>
-          )}
-        </Routes>
+                  }
+                />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<Navigate to="/signin" />} />
+              </>
+            )}
+          </Routes>
+        </div>
         <Footer />
       </div>
     </Router>

@@ -1,6 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:1337";
 
-console.log("BASE_URL:", BASE_URL); // Log the backend URL to debug issues
+console.log("BASE_URL:", BASE_URL); 
 
 export const get = async (endpoint) => {
   try {
